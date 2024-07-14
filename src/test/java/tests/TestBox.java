@@ -13,9 +13,7 @@ public class TestBox {
     @BeforeAll
     static void beforeAll() {
         Configuration.browserSize = "1920x1080";
-        Configuration.holdBrowserOpen = true;
         Configuration.pageLoadStrategy = "eager";
-        Configuration.pageLoadTimeout = 6000000;
         Configuration.baseUrl = "https://demoqa.com";
     }
 
@@ -23,6 +21,8 @@ public class TestBox {
 
     void fillFormTest() {
         open("/automation-practice-form");
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
         $("#firstName").setValue("Ivan");
         $("#lastName").setValue("Ivanov");
         $("#userEmail").setValue("ivanIvanov@gmail.com");
@@ -34,7 +34,7 @@ public class TestBox {
         $(".react-datepicker__month-select").$(byText("August")).click();
         $(".react-datepicker__day--010").click();
 
-        $("#uploadPicture").uploadFile(new File("src/test/resources/mushroom.jpg"));
+        $("#uploadPicture").uploadFromClasspath("mushroom.jpg");
 
         $("#subjectsInput").setValue("Chem").pressEnter();
         $( "label[for = 'hobbies-checkbox-2']").click();
