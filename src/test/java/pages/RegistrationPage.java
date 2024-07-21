@@ -5,7 +5,7 @@ import pages.components.CalendarComponent;
 import pages.components.CheckResultComponent;
 
 
-
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -22,6 +22,8 @@ public class RegistrationPage {
     public static SelenideElement stateInput = $("#state");
     public static SelenideElement cityInput = $("#city");
     public static SelenideElement submitButton = $("#submit");
+    public static SelenideElement resultsTable = $(".table");
+
 
     CalendarComponent calendarComponent = new CalendarComponent();
     CheckResultComponent checkResultComponent = new CheckResultComponent();
@@ -118,4 +120,12 @@ public class RegistrationPage {
                 hobbyCheck, addressCheck,
                 stateCityCheck);
     }
+    public void checkResultsOnlyNecessaryForms () {
+        checkResultComponent.checkResultsOnlyNecessaryForms
+                (fullNameCheck, genderCheck, numberCheck, birthDateCheck);
+    }
+    public void checkErrors () {
+        resultsTable.shouldNotBe(visible);
+    }
+
 }

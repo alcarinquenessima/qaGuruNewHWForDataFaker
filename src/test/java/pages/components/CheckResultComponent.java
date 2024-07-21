@@ -12,19 +12,28 @@ public class CheckResultComponent {
                               String genderCheck, String numberCheck,
                               String birthDateCheck, String subjectCheck,
                               String hobbyCheck, String addressCheck,
-                              String stateCityCheck)
-    {
+                              String stateCityCheck) {
         tableContent.shouldHave(
-            text(fullNameCheck),
-            text(emailCheck),
-            text(genderCheck),
-            text(numberCheck),
-            text(birthDateCheck),
-            text(subjectCheck),
-            text(hobbyCheck),
-            text("mushroom.jpg"),
-            text(addressCheck),
-            text(stateCityCheck)
-    );
+                text(fullNameCheck),
+                text(emailCheck),
+                text(genderCheck),
+                text(numberCheck),
+                text(birthDateCheck),
+                text(subjectCheck),
+                text(hobbyCheck),
+                text("mushroom.jpg"),
+                text(addressCheck),
+                text(stateCityCheck)
+        );
+    };
+        public void checkResultsOnlyNecessaryForms(String fullNameCheck, String genderCheck,
+                                                   String numberCheck, String birthDateCheck)
+        {
+            tableContent.shouldHave(
+                    text(fullNameCheck),
+                    text(genderCheck),
+                    text(numberCheck),
+                    text(birthDateCheck)
+            );
     }
 }
