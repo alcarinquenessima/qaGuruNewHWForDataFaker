@@ -1,66 +1,27 @@
 package tests;
 
-import java.io.File;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import com.codeborne.selenide.Configuration;
+import pages.RegistrationPage;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+public class TestBox extends TestBase {
 
-public class TestBox {
-    @BeforeAll
-    static void beforeAll() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.baseUrl = "https://demoqa.com";
-    }
-
+    RegistrationPage registrationPage = new RegistrationPage();
     @Test
-
     void fillFormTest() {
-        open("/automation-practice-form");
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
-        $("#firstName").setValue("Ivan");
-        $("#lastName").setValue("Ivanov");
-        $("#userEmail").setValue("ivanIvanov@gmail.com");
-        $("label[for = 'gender-radio-1']").click();
-        $("#userNumber").setValue("89991112233");
-
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").$(byText("2010")).click();
-        $(".react-datepicker__month-select").$(byText("August")).click();
-        $(".react-datepicker__day--010").click();
-
-        $("#uploadPicture").uploadFromClasspath("mushroom.jpg");
-
-        $("#subjectsInput").setValue("Chem").pressEnter();
-        $( "label[for = 'hobbies-checkbox-2']").click();
-
-
-        $("#currentAddress").setValue("Russia");
-        $("#stateCity-wrapper").click();
-        $("#state").$(byText("Haryana")).click();
-
-        $("#city").click();
-        $("#city").$(byText("Karnal")).click();
-
-        $("#submit").click();
-
-        $(".table-hover").shouldHave(text ("Ivan Ivanov"));
-        $(".table-hover").shouldHave(text ("ivanIvanov@gmail.com"));
-        $(".table-hover").shouldHave(text ("Male"));
-        $(".table-hover").shouldHave(text ("8999111223"));
-        $(".table-hover").shouldHave(text ("10 August,2010"));
-        $(".table-hover").shouldHave(text ("Chemistry"));
-        $(".table-hover").shouldHave(text ("Reading"));
-        $(".table-hover").shouldHave(text ("mushroom.jpg"));
-        $(".table-hover").shouldHave(text ("Russia"));
-        $(".table-hover").shouldHave(text ("Haryana Karnal"));
-
-
-
+        registrationPage.openPage()
+                        .setName("Ivan")
+                        .setSurname("Ivanov")
+                        .setEmail("ivanIvanov@gmail.com")
+                        .setGender("Other")
+                        .setNumber("8999888998")
+                        .setDate("2", "August", "2000")
+                        .setSubject("Chemistry")
+                        .setHobbies("Reading")
+                        .uploadPicture()
+                        .setAddress("Russia")
+                        .setState("Haryana")
+                        .setCity("Karnal")
+                        .submitInfo()
+                        .checkResults ();
     }
 }
