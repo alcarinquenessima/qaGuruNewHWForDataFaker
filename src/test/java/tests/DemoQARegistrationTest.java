@@ -2,47 +2,64 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
+import randomValuesForTest.Users;
 
 public class DemoQARegistrationTest extends TestBase {
 
     RegistrationPage registrationPage = new RegistrationPage();
+    Users user = new Users();
     @Test
     void fillFormTest() {
         registrationPage.openPage()
-                        .setName("Ivan")
-                        .setSurname("Ivanov")
-                        .setEmail("ivanIvanov@gmail.com")
-                        .setGender("Other")
-                        .setNumber("8999888998")
-                        .setDate("2", "August", "2000")
-                        .setSubject("Chemistry")
-                        .setHobbies("Reading")
-                        .uploadPicture()
-                        .setAddress("Russia")
-                        .setState("Haryana")
-                        .setCity("Karnal")
-                        .submitInfo()
-                        .checkResults ();
+                .removeBanner ()
+                .setName(user.firstName)
+                .setSurname(user.lastName)
+                .setEmail(user.email)
+                .setGender(user.gender)
+                .setNumber(user.userNumber)
+                .setDate(user.day,user.month,user.year)
+                .setSubject(user.randomSubject)
+                .setHobbies(user.hobby)
+                .uploadPicture(user.pictureStatic)
+                .setAddress(user.userAddress)
+                .setState(user.randomState)
+                .setCity(user.randomCity)
+                .submitInfo()
+                .checkResults("Student Name", user.firstName)
+                .checkResults("Student Email", user.email)
+                .checkResults("Gender", user.gender)
+                .checkResults("Mobile", user.userNumber)
+                .checkResults("Date of Birth", user.day + " " + user.month + "," + user.year)
+                .checkResults("Subjects", user.randomSubject)
+                .checkResults("Hobbies", user.hobby)
+                .checkResults("Picture", user.pictureStatic)
+                .checkResults("Address", user.userAddress)
+                .checkResults("State and City", user.randomState + " " + user.randomCity);
     }
     @Test
     void onlyNecessaryFormsRegistrationTest() {
         registrationPage.openPage()
-                .setName("Ivan")
-                .setSurname("Ivanov")
-                .setGender("Other")
-                .setNumber("8999888998")
-                .setDate("2", "August", "2000")
+                .removeBanner ()
+                .setName(user.firstName)
+                .setSurname(user.lastName)
+                .setGender(user.gender)
+                .setNumber(user.userNumber)
+                .setDate(user.day,user.month,user.year)
                 .submitInfo()
-                .checkResultsOnlyNecessaryForms ();
+                .checkResults("Student Name", user.firstName)
+                .checkResults("Gender", user.gender)
+                .checkResults("Mobile", user.userNumber)
+                .checkResults("Date of Birth", user.day + " " + user.month + "," + user.year);
     }
     @Test
-    void NegativeRegistrationTest (){
+    void negativeRegistrationTest(){
         registrationPage.openPage()
-                .setName("Ivan")
-                .setSurname("Ivanov")
-                .setGender("Other")
-                .setNumber("Not number")
-                .setDate("2", "August", "2000")
+                .removeBanner ()
+                .setName(user.firstName)
+                .setSurname(user.lastName)
+                .setGender(user.gender)
+                .setNumber(user.wrongUserNumber)
+                .setDate(user.day,user.month,user.year)
                 .submitInfo()
                 .checkErrors();
     }
